@@ -19,7 +19,10 @@ def compile_domains():
 
 def compile_by_domain_and_scope(domain, scope):
     common.print_verbose('Compiling ' + scope)
-    compile.compile('domains/' + domain + '/src/' + scope + '/java', 'target/domains/' + scope + '/' + domain, 'domains/' + domain + '/lib/' + scope + '/java/*.jar')
+    compile.compile('domains/' + domain + '/src/' + scope + '/java',
+                    'target/domains/' + scope + '/' + domain,
+                    dependencies.classpath_for(domain, scope))
+
 
 
 def main(argv):
