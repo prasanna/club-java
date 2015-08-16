@@ -14,8 +14,8 @@ def main(argv):
     if number_of_arguments != 3:
         print_usage()
         sys.exit(1)
-    (source_dir, target_dir, lib_dir) = argv
-    compile(source_dir, target_dir, lib_dir)
+    (source_dir, target_dir, classpath) = argv
+    compile(source_dir, target_dir, classpath)
 
 def print_usage():
     print "Usage: compile.py <source_dir> <target_dir>"

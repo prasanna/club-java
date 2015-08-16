@@ -8,7 +8,6 @@ def find_domains():
     if exit_code == 0:
         print ",".join(output.split("\n"))
 
-
 def main(argv):
     common.set_flags(argv)
     find_domains()
