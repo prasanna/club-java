@@ -4,22 +4,23 @@ import commands
 import sys, getopt
 import common
 import compile
+import dependencies
 
 
 def compile_domains():
     common.print_info("Domains: " + ", ".join(common.domains))
     for domain in common.domains:
+        dependencies.ensure_ready(domain, "main")
         print "Compiling " + domain
-        compile_main(domain)
-        compile_unit_tests(domain)
+        compile_by_domain_and_scope(domain, "main")
 
-def compile_main(domain):
-    common.print_verbose("Compiling main")
-    compile.compile('domains/' + domain + '/src/main/java', 'target/domains/main/' + domain)
+        dependencies.ensure_ready(domain, "unit-tests")
+        compile_by_domain_and_scope(domain, "unit-tests")
 
-def compile_unit_tests(domain):
-    common.print_verbose("Compiling unit-tests")
-    compile.compile('domains/' + domain + '/src/unit-tests/java', 'target/domains/unit-tests/' + domain)
+def compile_by_domain_and_scope(domain, scope):
+    common.print_verbose('Compiling ' + scope)
+    compile.compile('domains/' + domain + '/src/' + scope + '/java', 'target/domains/' + scope + '/' + domain, 'domains/' + domain + '/lib/' + scope + '/java/*.jar')
+
 
 def main(argv):
     common.set_flags(argv)
