@@ -1,4 +1,3 @@
 groupId,artifactId
 com.cafejava,apply-main
 junit,junit
-org.hamcrest,hamcrest-core

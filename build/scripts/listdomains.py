@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-import sys, commands
+import sys
 import common
 
 def find_domains():
-    (exit_code, output) = commands.getstatusoutput('ls -1 domains')
+    (exit_code, output) = common.run_command('ls -1 domains')
     if exit_code == 0:
         print ",".join(output.split("\n"))
 

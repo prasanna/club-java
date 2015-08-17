@@ -3,8 +3,9 @@
 import sys, getopt, commands
 
 verbose = False
-domains = ()
+domains = []
 dependency_versions_csv_path = ""
+scopes = []
 
 def run_command( command ):
     print_verbose(command)
@@ -42,11 +43,12 @@ def set_flags(argv):
     global verbose
     global domains
     global dependency_versions_csv_path
+    global scopes
 
-    usage = 'Usage: ' + __file__ + ' [-hv] [-d <domain1,domain2>] [-f <dependency-versions-file>]'
+    usage = 'Usage: ' + __file__ + ' [-hv] [-d <domain1,domain2>] [-f <dependency-versions-file>] [-s <scope1,scope2>]'
 
     try:
-        opts, args = getopt.getopt(argv,"hvd:f:", ["help", "verbose", "domains", "dependency-versions-file"])
+        opts, args = getopt.getopt(argv,"hvd:f:s:", ["help", "verbose", "domains", "dependency-versions-file", "scopes"])
     except getopt.GetoptError:
         print_error(usage)
         sys.exit(2)
@@ -60,6 +62,8 @@ def set_flags(argv):
             domains = arg.split(",")
         elif opt in ('-f', '--dependency-versions-file'):
             dependency_versions_csv_path = arg
+        elif opt in ('-s', '--scopes'):
+            scopes = arg.split(",")
 
 
 if __name__ == '__main__':
