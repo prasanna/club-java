@@ -14,3 +14,7 @@ ensure-unique-dependency-versions:
 
 clean:
 	rm -rf target
+
+hello:
+	./build/scripts/run.py -f dependency-versions.csv -d apply -s main com.clubjava.hello.Hello
+
