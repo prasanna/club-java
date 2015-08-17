@@ -123,10 +123,6 @@ def show_dependencies():
     for dependency, version in dependency_versions.iteritems():
         common.print_info(dependency + ": " + version)
 
-def main(argv):
-    common.set_flags(argv)
-    validate_dependencies()
-    show_dependencies()
 
 class Dependency:
     def __init__(self, domain, scope, group_id, artifact_id, version):
@@ -214,6 +210,11 @@ class Pom:
                 dep_ended = True
 
 
+
+def main(argv):
+    common.set_flags(argv)
+    validate_dependencies()
+    show_dependencies()
 
 if __name__ == '__main__':
     main(sys.argv[1:])
