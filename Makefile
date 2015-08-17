@@ -1,4 +1,4 @@
-default: ensure-unique-dependency-versions clean compile-all-domains compile-all-cross-domain-tests run-all-domain-unit-tests
+default: ensure-unique-dependency-versions clean compile-all-domains compile-all-cross-domain-tests run-all-domain-unit-tests hello
 
 
 compile-all-domains:
