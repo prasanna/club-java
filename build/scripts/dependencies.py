@@ -195,20 +195,31 @@ class Pom:
     def parse(self, pom_location):
         pom = xml.parse(pom_location)
 
-        dep_started = False
-        dep_ended = False
-        for dep in pom.iter():
-            if(dep.tag == "{http://maven.apache.org/POM/4.0.0}dependencies"):
-                dep_started = True
-            if(dep.tag == "{http://maven.apache.org/POM/4.0.0}dependency" and dep_started and not dep_ended):
-                group_id = dep.find("{http://maven.apache.org/POM/4.0.0}groupId").text
-                artifact_id = dep.find("{http://maven.apache.org/POM/4.0.0}artifactId").text
-                version = dep.find("{http://maven.apache.org/POM/4.0.0}version").text
-                self.direct_dependencies[group_id + "," + artifact_id] = version
-                group_id = artifact_id = version = ""
-            if(dep_started and not dep_ended and dep.tag not in ("{http://maven.apache.org/POM/4.0.0}dependencies", "{http://maven.apache.org/POM/4.0.0}dependency")):
-                dep_ended = True
+        in_plugins = False
 
+        for elem in pom.iter():
+            if(elem.tag == "{http://maven.apache.org/POM/4.0.0}plugins"):
+                in_plugins = True
+
+            if(in_plugins and elem.tag == "plugins"):
+                in_plugins = False
+
+            if(not in_plugins and elem.tag == "{http://maven.apache.org/POM/4.0.0}dependencies"):
+
+                for dep in elem.findall("{http://maven.apache.org/POM/4.0.0}dependency"):
+                    group_id = dep.find("{http://maven.apache.org/POM/4.0.0}groupId").text
+                    artifact_id = dep.find("{http://maven.apache.org/POM/4.0.0}artifactId").text
+                    version = get_text(dep.find("{http://maven.apache.org/POM/4.0.0}version"))
+                    self.direct_dependencies[group_id + "," + artifact_id] = version
+                    common.print_info("        " + group_id + ", " + artifact_id + ", " + version)
+                    group_id = artifact_id = version = ""
+
+
+
+def get_text(elem):
+    if elem is None:
+      return ""
+    return elem.text
 
 
 def main(argv):

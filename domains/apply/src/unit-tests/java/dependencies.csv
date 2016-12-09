@@ -1,3 +1,4 @@
 groupId,artifactId
 com.cafejava,apply-main
 junit,junit
+org.mockito,mockito-core

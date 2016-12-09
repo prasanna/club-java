@@ -15,6 +15,14 @@ ensure-unique-dependency-versions:
 clean:
 	rm -rf target
 
+cleanlibs:
+	find . -type d -name "lib" | xargs rm -rf
+
 hello:
 	./build/scripts/run.py -f dependency-versions.csv -d apply -s main com.clubjava.hello.Hello
 
+cli:
+	./build/scripts/run.py -f dependency-versions.csv -d apply -s main com.clubjava.CommandLineInterface
+
+web:
+	./build/scripts/run.py -f dependency-versions.csv -d apply -s main com.clubjava.WebInterface
